@@ -11,24 +11,62 @@ import java.util.Set;
 public class FirstScreen {
 
 	public static void main(String[] args) throws IOException {
+
 		Database db = new Database();
 
 		try {
-			// database connection.
-
-			
+			db.createDatabase();
 		} catch (Exception e) {
 
 		}
 
-		// Scanner sc = new Scanner(System.in);
-		BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
+		while(true) {
 
-		System.out.println("Please Enter your LLID");
-		String llid = sc.readLine();
+			// Scanner sc = new Scanner(System.in);
+			BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
 
-		// check llid in the database
+			
+			System.out.println("Please Enter your LLID");
+			String llid = sc.readLine();
+			
+			if (llid.equals("exit")) {
+				System.exit(0);
+			}
+			
+			// check llid in the database
+			if (db.isUserPresent(llid)) {
+				System.out.println("Please Enter your password");
 
-		System.out.println(db.checkUser(llid));
+				BufferedReader passInp = new BufferedReader(new InputStreamReader(System.in));
+				String password = passInp.readLine();
+
+				int count = 0;
+				while(count<2)
+				{
+					if(db.checkPassword(llid, password))
+						break;
+					else {
+						System.out.println("Please enter again");
+						password = sc.readLine();
+					}
+					count++;
+				}
+				
+				if(count==3)
+				{
+					System.out.println("Incorrect password for three times");
+				}
+				
+			} else {
+				System.out.println("User not found...Please Sign up");
+
+				System.out.println("Your user LLID is " + llid + "\nPlease enter new password");
+				String password = sc.readLine();
+
+				db.signUp(llid, password);
+
+			}
+		}
+
 	}
 }
