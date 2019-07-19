@@ -1,0 +1,6 @@
+EmpID: 78
+EmpName: qwsdasd
+Salary :12121.0
+EmpID: 87
+EmpName: sdasd
+Salary :212121.0
